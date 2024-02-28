@@ -76,6 +76,23 @@ const handleShowdetails = async (id) =>{
 
 const showPhoneDetails = (phone) =>{
     console.log(phone);
+    const phoneName = document.getElementById('show-details-phone-name');
+    phoneName.innerText = phone.name;
+
+    const showdetailContainer = document.getElementById('show-detail-container');
+    showdetailContainer.innerHTML =`
+        <img class ="pl-32" src ="${phone.image}" alt =""/>,
+        <p><span class ="text-sm text-black font-bold px-2">Storage:</span>${phone?.mainFeatures?.storage}</p>
+        <p><span class ="text-sm text-black font-bold px-2">Display Size:</span>${phone?.mainFeatures?.displaySize
+        }</p>
+        <p><span class ="text-sm text-black font-bold px-2">Chipest:</span>${phone?.mainFeatures?.chipSet}</p>
+        <p><span class ="text-sm text-black font-bold px-2">Memory:</span>${phone?.mainFeatures?.memory}</p>
+        <p><span class ="text-sm text-black font-bold px-2">Release data:</span>${phone?.releaseDate
+        }</p>
+        <p><span class ="text-sm text-black font-bold px-2">Brand:</span>${phone?.brand }</p>
+        <p><span class ="text-sm text-black font-bold px-2">GPS:</span>${phone?.others?.GPS || 'No GPS available'}</p>
+    `;
+
     //show the modal
     show_details_modal.showModal();
 }
