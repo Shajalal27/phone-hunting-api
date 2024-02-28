@@ -1,4 +1,4 @@
-const loadPhone = async (searchText, isShowAll) =>{
+const loadPhone = async (searchText ='13', isShowAll) =>{
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`);
     const data = await res.json();
     const phones = data.data;
@@ -7,7 +7,7 @@ const loadPhone = async (searchText, isShowAll) =>{
 }
 
 const displayPhones = (phones, isShowAll) =>{
-    console.log(phones)
+    // console.log(phones)
     const phoneContainer = document.getElementById('phone-container');
 
     //clear phone container cards before adding new cards
@@ -22,7 +22,7 @@ const displayPhones = (phones, isShowAll) =>{
         showAllContainer.classList.add('hidden')
     }
 
-    console.log('Is show all', isShowAll)
+    // console.log('Is show all', isShowAll)
     //display only first 12 phones if not show all
    if(!isShowAll){
     phones = phones.slice(0, 12);
@@ -30,7 +30,7 @@ const displayPhones = (phones, isShowAll) =>{
 
 
     phones.forEach(phone =>{
-    console.log(phone);
+    // console.log(phone);
     //2 creat a div
     const phoneCard = document.createElement('div');
     phoneCard.classList = `card p-4 bg-base-100 shadow-xl`;
@@ -40,8 +40,9 @@ const displayPhones = (phones, isShowAll) =>{
         <div class="card-body">
         <h2 class="card-title">${phone.phone_name}</h2>
         <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div class="card-actions justify-end">
-            <button class="btn btn-primary">Buy Now</button>
+        <div class="card-actions justify-center">
+            <button onclick = "handleShowdetails('${phone.slug}')
+            " class="btn btn-primary">Show Details</button>
         </div>
         </div>
     `;
@@ -62,6 +63,23 @@ const handlesearch = (isShowAll) =>{
     loadPhone(searchText, isShowAll);
 }
 
+//Show datails 
+const handleShowdetails = async (id) =>{
+    // console.log('clicked show details', id)
+    //load single phone data
+    const res = await fetch(` https://openapi.programming-hero.com/api/phone/${id}`);
+    const data = await res.json();
+    // console.log(data);
+    const phone = data.data;
+    showPhoneDetails(phone);
+}
+
+const showPhoneDetails = (phone) =>{
+    console.log(phone);
+    //show the modal
+    show_details_modal.showModal();
+}
+
 const toggleLoadingSpinner = (isLoading) =>{
     const loadingSpinner = document.getElementById('loading-spinner');
     if(isLoading){
@@ -78,4 +96,4 @@ const handleShowAll = () =>{
  handlesearch(true);
 }
 
-// loadPhone();
+loadPhone();
